@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Blackjack Game (Musuh = Dealer)</title>
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+
+    <div class="game-area">
+        <h1>♠️ Blackjack (21) ♦️</h1>
+
+        <div id="status-bar">
+            💰 Saldo Chip Anda: <span id="player-chips">1000</span>
+            <br>
+            Bet: <input type="number" id="bet-amount" value="50" min="10">
+            <button id="deal-btn" onclick="dealInitialCards()">Pasang Taruhan & Bagikan Kartu</button>
+        </div>
+        
+        <hr>
+        <div class="hand-display">
+            <h3>Dealer (Musuh)</h3>
+
+            <div id="dealer-bubble">...</div>
+            
+            <p>Kartu: <span id="dealer-cards"></span></p>
+            <p>Skor: <span id="dealer-score-display">?</span></p>
+        </div>
+
+
+        <div class="hand-display">
+            <h3>Anda (Pemain)</h3>
+            <p>Kartu: <span id="player-cards"></span></p>
+            <p>Skor: <span id="player-score-display">0</span></p>
+        </div>
+        
+        <div id="controls">
+            <button id="hit-btn" onclick="hit()">Hit</button>
+            <button id="stand-btn" onclick="stand()">Stand</button>
+            <button id="reset-btn" onclick="startGame()">Reset Game & Saldo</button>
+        </div>
+
+        <p id="result-message">Selamat datang! Silakan pasang taruhan Anda.</p>
+    </div>
+
+    <script src="script.js"></script> 
+</body>
+</html>

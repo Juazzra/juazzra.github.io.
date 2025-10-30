@@ -1,0 +1,205 @@
+/* --- Gaya Dasar Halaman --- */
+body { 
+    font-family: 'Arial', sans-serif; 
+    background-color: #0c6a38; /* Warna hijau meja kasino */
+    color: white; 
+    text-align: center; 
+    padding: 20px; 
+}
+.game-area { 
+    max-width: 700px; 
+    margin: 0 auto; 
+    padding: 25px; 
+    border: 4px solid gold; 
+    border-radius: 15px; 
+    background-color: #004d00; /* Hijau yang lebih gelap */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+h1 { 
+    color: gold; 
+    border-bottom: 2px solid gold; 
+    padding-bottom: 10px; 
+    margin-bottom: 20px;
+}
+hr {
+    border-color: gold;
+    opacity: 0.3;
+}
+
+/* --- Area Status (Chip & Taruhan) --- */
+#status-bar {
+    background-color: #003300;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    color: white;
+}
+#bet-amount {
+    width: 80px;
+    padding: 5px;
+    margin: 0 10px;
+    text-align: center;
+    border-radius: 3px;
+    border: 2px solid gold;
+}
+#deal-btn {
+    background-color: gold;
+    color: black;
+    font-weight: bold;
+}
+
+/* --- Gaya Tombol Kontrol --- */
+button { 
+    padding: 10px 20px; 
+    font-size: 16px; 
+    margin: 5px; 
+    cursor: pointer; 
+    background-color: #f0f0f0; 
+    border: 2px solid #555; 
+    border-radius: 5px;
+    transition: background-color 0.2s;
+}
+button:hover:not(:disabled) {
+    background-color: #fff;
+}
+button:disabled { 
+    background-color: #888; 
+    color: #ccc;
+    cursor: not-allowed; 
+}
+
+/* --- Area Tangan (Hand Display) --- */
+.hand-display { 
+    min-height: 150px;
+    margin: 20px 0; 
+    padding: 15px; 
+    border: 1px dashed white; 
+    border-radius: 8px;
+}
+.hand-display h3 {
+    margin-top: 0;
+    color: lightgray;
+}
+
+/* --- Gaya Kartu (Penting!) --- */
+.card { 
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 60px; /* Lebar kartu */
+    height: 90px; /* Tinggi kartu */
+    padding: 5px;
+    margin: 4px;
+    background-color: white; 
+    border: 1px solid black; 
+    border-radius: 5px; 
+    font-weight: bold; 
+    font-size: 1.2em;
+    line-height: 1.2;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Warna untuk kartu Merah (Hati dan Berlian) */
+.card.red-suit {
+    color: red;
+}
+
+/* Warna default untuk kartu Hitam (Sekop dan Keriting) */
+.card:not(.red-suit) {
+    color: black;
+}
+
+/* Tampilan Kartu Tersembunyi */
+.card.hidden {
+    background-color: #333; /* Abu-abu gelap */
+    color: transparent;
+    border: 3px solid silver;
+    font-size: 0;
+    display: inline-flex; /* Pastikan tetap inline-flex */
+    justify-content: center;
+    align-items: center;
+}
+.card.hidden::after {
+    content: "?"; 
+    font-size: 3em;
+    color: silver;
+}
+
+/* --- Pesan Hasil --- */
+#result-message { 
+    font-size: 1.8em; 
+    font-weight: bold; 
+    margin-top: 25px; 
+    color: yellow; 
+    text-shadow: 1px 1px 3px black;
+    min-height: 1.2em; /* Mencegah lompatan layout */
+}
+
+/* --- Animasi Kartu "Jatuh" --- */
+@keyframes dealAnimation {
+    from {
+        opacity: 0;
+        transform: translateY(-150px) rotateX(-90deg);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) rotateX(0deg);
+    }
+}
+
+/* Kelas untuk memicu animasi */
+.card.deal-in {
+    animation: dealAnimation 0.5s ease-out;
+    opacity: 0; 
+    animation-fill-mode: forwards; 
+}
+/* --- Gaya Gelembung Dialog Dealer --- */
+
+/* 1. Jadikan area dealer sebagai 'induk' untuk penempatan */
+.hand-display {
+    position: relative; /* Ini mungkin sudah ada, tapi pastikan ada */
+    /* ... (sisa gaya .hand-display Anda) ... */
+}
+
+/* 2. Gaya gelembung dialog itu sendiri */
+#dealer-bubble {
+    position: absolute;
+    top: -45px; /* Posisikan di atas area dealer */
+    left: 50%;
+    transform: translateX(-50%);
+    
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 10px 15px;
+    border-radius: 15px;
+    
+    width: 200px;
+    font-size: 0.9em;
+    font-weight: bold;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    
+    /* Sembunyikan secara default */
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+/* 3. "Ekor" gelembung yang menunjuk ke bawah */
+#dealer-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -10px; /* Menempel di bagian bawah gelembung */
+    left: 50%;
+    margin-left: -10px;
+    
+    border-width: 10px 10px 0 10px; /* Segitiga menunjuk ke atas (ke dalam bubble) */
+    border-style: solid;
+    border-color: #f0f0f0 transparent transparent transparent;
+}
+
+/* 4. Kelas 'show' untuk menampilkan gelembung (via JS) */
+#dealer-bubble.show {
+    visibility: visible;
+    opacity: 1;
+}
